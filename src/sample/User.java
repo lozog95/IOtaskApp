@@ -7,6 +7,22 @@ public class User {
     private String user_surname;
     private Integer user_ID;
 
+    public User(String user_login, String user_password) {
+        this(user_login,user_password, "Imie", "Nazwisko",1);
+    }
+
+    public User(String user_login){
+        this("root", "admin", user_login,"default", 1);
+    }
+
+    public User(String user_login, String user_password, String user_name, String user_surname, Integer user_ID) {
+        this.user_login = user_login;
+        this.user_password = user_password;
+        this.user_name = user_name;
+        this.user_surname = user_surname;
+        this.user_ID = user_ID;
+    }
+
     public String getUser_login() {
         return user_login;
     }
