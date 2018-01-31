@@ -1,6 +1,6 @@
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.cell.ChoiceBoxListCell?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.*?>
 <GridPane fx:controller="sample.MainController"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
@@ -30,8 +30,12 @@
     <Button onAction="#addButton" fx:id="addBtn" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
     <TableView fx:id="tableView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="10">
 
-    <columns>
-        <TableColumn text="Tasks"/>
-    </columns>
+        <!--<columns>
+            <TableColumn text="Tasks">
+                <cellValueFactory>
+                    <PropertyValueFactory property="title" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>-->
 </TableView>
 </GridPane>
