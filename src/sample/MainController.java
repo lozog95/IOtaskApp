@@ -9,11 +9,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.util.Random;
 
 public class MainController {
-
-
     public TableView<Task> tableView;
     public TextField titleField;
-    public TextField descField;
     public TextField estField;
     public ChoiceBox ownerField;
     public Button addBtn;
@@ -24,8 +21,6 @@ public class MainController {
                 "lozog", "root", "sample", "kamil") //to add users dynamically from db.
         );
 
-        /*Task task = new Task(1, "task", 3, new User("lozog"), "ddd");
-        taskObservableList.add(task);*/
         TableColumn title = new TableColumn("Task");
 
         title.setCellValueFactory(
@@ -37,7 +32,6 @@ public class MainController {
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
     }
-
 
     public void addButton(ActionEvent actionEvent) {
         int taskId = new Random().nextInt();

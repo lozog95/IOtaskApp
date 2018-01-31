@@ -10,32 +10,20 @@
 
     <TextField fx:id="titleField"
                GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-    <Label text="Description:"
-           GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-
-    <TextField fx:id="descField"
-               GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
     <Label text="Estimate:"
-           GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+           GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
     <TextField fx:id="estField"
-               GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+               GridPane.columnIndex="1" GridPane.rowIndex="3"/>
     <Label text="Owner:"
-           GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+           GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
 
-    <ChoiceBox fx:id="ownerField" GridPane.columnIndex="1" GridPane.rowIndex="7">
+    <ChoiceBox fx:id="ownerField" GridPane.columnIndex="1" GridPane.rowIndex="5">
     </ChoiceBox>
-    <Button onAction="#addButton" fx:id="addBtn" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+    <Button onAction="#addButton" fx:id="addBtn" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
     <TableView fx:id="tableView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="10">
 
-        <!--<columns>
-            <TableColumn text="Tasks">
-                <cellValueFactory>
-                    <PropertyValueFactory property="title" />
-                </cellValueFactory>
-            </TableColumn>
-        </columns>-->
 </TableView>
 </GridPane>
