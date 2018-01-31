@@ -12,7 +12,7 @@ public class User {
     }
 
     public User(String user_login){
-        this("root", "admin", user_login,"default", 1);
+        this(user_login, "admin", user_login,"default", 1);
     }
 
     public User(String user_login, String user_password, String user_name, String user_surname, Integer user_ID) {

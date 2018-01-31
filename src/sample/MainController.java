@@ -24,8 +24,8 @@ public class MainController {
                 "lozog", "root", "sample", "kamil") //to add users dynamically from db.
         );
 
-        Task task = new Task(1, "task", 3, new User("lozog"), "ddd");
-        taskObservableList.add(task);
+        /*Task task = new Task(1, "task", 3, new User("lozog"), "ddd");
+        taskObservableList.add(task);*/
         TableColumn title = new TableColumn("Task");
 
         title.setCellValueFactory(
@@ -41,8 +41,10 @@ public class MainController {
 
     public void addButton(ActionEvent actionEvent) {
         int taskId = new Random().nextInt();
-       // User user = new User(taskId, titleField.getText(), estField.getText(),  );
-        Task task = new Task(taskId,titleField.getText(),  Integer.parseInt(estField.getText()), new User(ownerField.selectionModelProperty().toString()), "Task "+taskId+" of "+ownerField.selectionModelProperty().toString());
+        String userLogin=ownerField.getValue().toString();
+        User user= new User(userLogin);
+        System.out.println(userLogin);
+        Task task=new Task(taskId,titleField.getText(),Integer.parseInt(estField.getText()), user, "["+ 1+"] "+titleField.getText()+" | Assignee: "+ user.getUser_login()+" | Estimate: "+estField.getText());
         taskObservableList.add(task);
         System.out.println(task.getDescription());
         tableView.refresh();
