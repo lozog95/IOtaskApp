@@ -10,8 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -65,7 +64,7 @@ public class MainController {
         upBtn.disableProperty().bind(selectedIndex.lessThanOrEqualTo(0));
     }
 
-    public void addButton(ActionEvent actionEvent) {
+    public void addButton(ActionEvent actionEvent) throws IOException {
         int taskId = tableView.getItems().size()+1;
         String userLogin=ownerField.getValue().toString();
         System.out.println(userLogin);
@@ -73,6 +72,16 @@ public class MainController {
         taskObservableList.add(task);
         System.out.println(task.getDescription());
         tableView.refresh();
+        FileWriter writer = new FileWriter(tasksCsv);
+        List<String> taskList = new ArrayList<>();
+        taskList.add(String.valueOf(task.getId()));
+        taskList.add(task.getTitle());
+        taskList.add(String.valueOf(task.getEstimate()));
+        taskList.add(task.getOwner());
+        writeLine(writer,taskList);
+        writer.flush();
+        //writer.close();
+
     }
 
 
@@ -205,6 +214,52 @@ public class MainController {
         result.add(curVal.toString());
 
         return result;
+    }
+
+    public static void writeLine(Writer w, List<String> values) throws IOException {
+        writeLine(w, values, DEFAULT_SEPARATOR, ' ');
+    }
+
+    public static void writeLine(Writer w, List<String> values, char separators) throws IOException {
+        writeLine(w, values, separators, ' ');
+    }
+
+    //https://tools.ietf.org/html/rfc4180
+    private static String followCVSformat(String value) {
+
+        String result = value;
+        if (result.contains("\"")) {
+            result = result.replace("\"", "\"\"");
+        }
+        return result;
+
+    }
+
+    public static void writeLine(Writer w, List<String> values, char separators, char customQuote) throws IOException {
+
+        boolean first = true;
+
+        //default customQuote is empty
+
+        if (separators == ' ') {
+            separators = DEFAULT_SEPARATOR;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (String value : values) {
+            if (!first) {
+                sb.append(separators);
+            }
+            if (customQuote == ' ') {
+                sb.append(followCVSformat(value));
+            } else {
+                sb.append(customQuote).append(followCVSformat(value)).append(customQuote);
+            }
+
+            first = false;
+        }
+        sb.append("\n");
+        w.append(sb.toString());
     }
 
 
