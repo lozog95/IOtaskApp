@@ -10,10 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -67,7 +64,7 @@ public class MainController {
         upBtn.disableProperty().bind(selectedIndex.lessThanOrEqualTo(0));
     }
 
-    public void addButton(ActionEvent actionEvent) {
+    public void addButton(ActionEvent actionEvent) throws IOException {
         int taskId = tableView.getItems().size()+1;
         String userLogin=ownerField.getValue().toString();
         System.out.println(userLogin);
@@ -75,6 +72,16 @@ public class MainController {
         taskObservableList.add(task);
         System.out.println(task.getDescription());
         tableView.refresh();
+        FileWriter writer = new FileWriter(tasksCsv);
+        List<String> taskList = new ArrayList<>();
+        taskList.add(String.valueOf(task.getId()));
+        taskList.add(task.getTitle());
+        taskList.add(String.valueOf(task.getEstimate()));
+        taskList.add(task.getOwner());
+        writeLine(writer,taskList);
+        writer.flush();
+        //writer.close();
+
     }
 
 
@@ -253,8 +260,6 @@ public class MainController {
         }
         sb.append("\n");
         w.append(sb.toString());
-
-
     }
 
 
