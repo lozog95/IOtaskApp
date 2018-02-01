@@ -1,8 +1,12 @@
 package sample;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -25,7 +29,13 @@ public class MainController {
     public ChoiceBox ownerField;
     public Button addBtn;
     public ObservableList<Task> taskObservableList;
+    @FXML
+    Button upBtn = new Button("Up");
+    @FXML
+    Button downBtn = new Button ("Down");
+
     public void initialize(){
+
         taskObservableList=FXCollections.observableArrayList();
 
         try {
@@ -50,7 +60,9 @@ public class MainController {
         tableView.setItems(taskObservableList);
         tableView.getColumns().add(title);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
+        ReadOnlyIntegerProperty selectedIndex = tableView.getSelectionModel().selectedIndexProperty();
+        downBtn.disableProperty().bind(selectedIndex.isEqualTo((tableView.getItems().size()-1)));
+        upBtn.disableProperty().bind(selectedIndex.lessThanOrEqualTo(0));
     }
 
     public void addButton(ActionEvent actionEvent) {
@@ -64,6 +76,20 @@ public class MainController {
     }
 
 
+
+
+    public void upBtn(ActionEvent actionEvent){
+        int index = tableView.getSelectionModel().getSelectedIndex();
+        tableView.getItems().add(index-1, tableView.getItems().remove(index));
+        tableView.getSelectionModel().clearAndSelect(index-1);
+    }
+
+    public void downBtn(ActionEvent actionEvent) {
+        int index = tableView.getSelectionModel().getSelectedIndex();
+        tableView.getItems().add(index+1, tableView.getItems().remove(index));
+        tableView.getSelectionModel().clearAndSelect(index+1);
+        System.out.println(tableView.getItems().size());
+    }
 
     public ArrayList<User> loadUsersCSV(String path) throws FileNotFoundException {
         ArrayList<User> usersList = new ArrayList<>();
@@ -180,5 +206,6 @@ public class MainController {
 
         return result;
     }
+
 
 }
