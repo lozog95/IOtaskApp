@@ -1,4 +1,8 @@
-2,bbb,43444,mmirzyns
-2,Luki i Marcel krule Dzawy,6969,lozog
-3,Testerzy do roboty!,420,mmirzyns
-4,Kozyra nie wie co sie w kodzie dzieje,999,kkozyra
+1,create a project,2,root, create all simple class
+2,create taskCalss,4,lozog, modify the task class
+3,create userClass,4,amezyk,modyfi the user class
+4,create testClass,5,kkozyra, create teste for all classes
+5,create dataBase,6,mmizynski,connect the application with the database
+6,create CSVFiles,7,mmakowiec,filling files with data
+7,merge branches,5,root,merge all branches to master
+8,updating diagrams,7,smigacz, updating all diagrams to be compatible with application
