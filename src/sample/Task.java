@@ -7,15 +7,23 @@ public class Task {
     private int id;
     private String title;
     private int estimate;
-    private User owner;
+    private String owner;
     private String description;
 
-    public Task(int id, String title, int estimate, User owner, String description) {
+    public Task(int id, String title, int estimate, String owner, String description) {
         this.id = id;
         this.title = title;
         this.estimate = estimate;
         this.owner = owner;
         this.description = description;
+    }
+
+    public Task(int id, String title, int estimate, String owner){
+        this.id = id;
+        this.title = title;
+        this.estimate = estimate;
+        this.owner = owner;
+        this.description="["+id+"] "+title+" | "+ estimate+ " | "+ owner;
     }
 
     public int getId() {
@@ -42,11 +50,11 @@ public class Task {
         this.estimate = estimate;
     }
 
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 
