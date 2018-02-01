@@ -23,8 +23,13 @@
     <ChoiceBox fx:id="ownerField" GridPane.columnIndex="1" GridPane.rowIndex="5">
     </ChoiceBox>
     <Button onAction="#addButton" fx:id="addBtn" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
     <Button onAction="#upBtn" fx:id="upBtn" text="&#x2191;" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
     <Button onAction="#downBtn" fx:id="downBtn" text="&#x2193;" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+
+
+
+
     <TableView fx:id="tableView" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.rowSpan="10">
 
 </TableView>
