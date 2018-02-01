@@ -1,8 +1,15 @@
 1,create a project,2,root, create all simple class
-2,create taskCalss,4,lozog, modify the task class
-3,create userClass,4,amezyk,modyfi the user class
+2,create taskClass,4,lozog, modify the task class
+3,create userClass,4,amezyk,modify the user class
 4,create testClass,5,kkozyra, create teste for all classes
 5,create dataBase,6,mmizynski,connect the application with the database
 6,create CSVFiles,7,mmakowiec,filling files with data
 7,merge branches,5,root,merge all branches to master
 8,updating diagrams,7,smigacz, updating all diagrams to be compatible with application
+9,create test project,8,mmakowiec,
+10,clean up code,9,lraczek,
+11,create test data,10,amezyk
+12,code review,11,lozog,
+13,pull new changes,12,root
+14,create more test data,13,amezyk,
+15,clean up GUI,14,lozog
