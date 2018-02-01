@@ -72,7 +72,7 @@ public class MainController {
         taskObservableList.add(task);
         System.out.println(task.getDescription());
         tableView.refresh();
-        FileWriter writer = new FileWriter(tasksCsv);
+        FileWriter writer = new FileWriter(tasksCsv, true);
         List<String> taskList = new ArrayList<>();
         taskList.add(String.valueOf(task.getId()));
         taskList.add(task.getTitle());
@@ -80,7 +80,7 @@ public class MainController {
         taskList.add(task.getOwner());
         writeLine(writer,taskList);
         writer.flush();
-        //writer.close();
+        writer.close();
 
     }
 
