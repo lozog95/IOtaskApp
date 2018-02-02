@@ -1,1 +1,35 @@
-2,bbb,43444,mmirzyns
+1,create a project,2,root, create all simple class
+2,create MainClass,4,lozog, modify the task class
+3,create taskClass,4,lozog, modify the task class
+4,create userClass,4,amezyk,modify the user class
+5,create testClass,5,kkozyra, create test for all classes
+6,create dataBase,3,mmizynski,connect the application with the database
+7,create CSVFiles,8,mmakowiec,filling files with data
+8,merge branches,5,root,merge all branches to master
+9,updating diagrams,7,smigacz, updating all diagrams to be compatible with application
+10,create test project,8,mmakowiec,
+11,clean up code,9,lraczek,cleanig
+12,create test data,10,amezyk,testing
+13,code review,1,lozog,
+14,pull new changes,4,root
+15,create more test data,12,amezyk,
+16,clean up GUI,14,lozog
+17,add users,8,smigacz
+18,clean up code,24,mmakowiec
+19,making new gui,2,mmakowiec
+20,managing new tasks,10,lraczek
+21,pull changes,4,root,pulling
+22,making test class for Controller,7,mmirzynsk,test class
+23,making test class for MainController,7,mmirzynsk,test class
+24,making test class for Main,7,mmirzynsk,test class
+25,making test class for Task,7,mmirzynsk,test class
+26,making test class for User,7,mmirzynsk,test class
+27,updating diagrams,15,lraczek,updating diagrams for actual code uses
+28,pull new changes,5,root
+29,merge branches,6,root,merge all branches to master
+30,clean up code,24,mmakowiec
+31,cleaning csv files,15,lraczek
+32,code review,1,lozog,revieving code
+33,changes in gui,5,smigacz
+34,updates in controller,4,lozog
+35,merge branches,6,root,merge all branches to master
