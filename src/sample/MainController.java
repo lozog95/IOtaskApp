@@ -28,6 +28,7 @@ public class MainController {
     public ChoiceBox ownerField;
     public Button addBtn;
     public ObservableList<Task> taskObservableList;
+    CSVUtils csvObject = new CSVUtils();
     @FXML
     Button upBtn = new Button("Up");
     @FXML
@@ -36,10 +37,12 @@ public class MainController {
     public void initialize(){
 
         taskObservableList=FXCollections.observableArrayList();
+        
+        
 
         try {
-            usersList=loadUsersCSV(usersCsv);
-            tasksList=loadTasksCSV(tasksCsv);
+            usersList=csvObject.loadUsersCSV(usersCsv);
+            tasksList=csvObject.loadTasksCSV(tasksCsv);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -51,6 +54,7 @@ public class MainController {
         }
 
         ownerField.setItems(FXCollections.observableArrayList(loginsList));
+        ownerField.getSelectionModel().selectFirst();
         TableColumn title = new TableColumn("Task");
         title.setCellValueFactory(
                 new PropertyValueFactory<>("description"));
@@ -59,6 +63,7 @@ public class MainController {
         tableView.setItems(taskObservableList);
         tableView.getColumns().add(title);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableView.getSelectionModel().select(0);
         ReadOnlyIntegerProperty selectedIndex = tableView.getSelectionModel().selectedIndexProperty();
         downBtn.disableProperty().bind(selectedIndex.isEqualTo((tableView.getItems().size()-1)));
         upBtn.disableProperty().bind(selectedIndex.lessThanOrEqualTo(0));
@@ -78,7 +83,7 @@ public class MainController {
         taskList.add(task.getTitle());
         taskList.add(String.valueOf(task.getEstimate()));
         taskList.add(task.getOwner());
-        writeLine(writer,taskList);
+        csvObject.writeLine(writer,taskList);
         writer.flush();
         writer.close();
 
@@ -100,167 +105,7 @@ public class MainController {
         System.out.println(tableView.getItems().size());
     }
 
-    public ArrayList<User> loadUsersCSV(String path) throws FileNotFoundException {
-        ArrayList<User> usersList = new ArrayList<>();
-        Scanner scanner = new Scanner(new File(path));
-        while (scanner.hasNext()) {
-            List<String> line = parseLine(scanner.nextLine());
-            System.out.println("user " + line.get(0));
-            usersList.add(new User(line.get(0)));
-        }
-        scanner.close();
-        return usersList;
-    }
-
-    public ArrayList<Task> loadTasksCSV(String path) throws FileNotFoundException {
-        ArrayList<Task> tasksList = new ArrayList<>();
-        Scanner scanner = new Scanner(new File(path));
-        while (scanner.hasNext()) {
-            List<String> line = parseLine(scanner.nextLine());
-            System.out.println("task " + line.get(0));
-            tasksList.add(new Task(Integer.parseInt(line.get(0)), line.get(1), Integer.parseInt(line.get(2)), line.get(3)));
-        }
-        scanner.close();
-        return tasksList;
-    }
-
-    public static List<String> parseLine(String cvsLine) {
-        return parseLine(cvsLine, DEFAULT_SEPARATOR, DEFAULT_QUOTE);
-    }
-
-    public static List<String> parseLine(String cvsLine, char separators) {
-        return parseLine(cvsLine, separators, DEFAULT_QUOTE);
-    }
-
-    public static List<String> parseLine(String cvsLine, char separators, char customQuote) {
-
-        List<String> result = new ArrayList<>();
-
-        //if empty, return!
-        if (cvsLine == null && cvsLine.isEmpty()) {
-            return result;
-        }
-
-        if (customQuote == ' ') {
-            customQuote = DEFAULT_QUOTE;
-        }
-
-        if (separators == ' ') {
-            separators = DEFAULT_SEPARATOR;
-        }
-
-        StringBuffer curVal = new StringBuffer();
-        boolean inQuotes = false;
-        boolean startCollectChar = false;
-        boolean doubleQuotesInColumn = false;
-
-        char[] chars = cvsLine.toCharArray();
-
-        for (char ch : chars) {
-
-            if (inQuotes) {
-                startCollectChar = true;
-                if (ch == customQuote) {
-                    inQuotes = false;
-                    doubleQuotesInColumn = false;
-                } else {
-
-                    //Fixed : allow "" in custom quote enclosed
-                    if (ch == '\"') {
-                        if (!doubleQuotesInColumn) {
-                            curVal.append(ch);
-                            doubleQuotesInColumn = true;
-                        }
-                    } else {
-                        curVal.append(ch);
-                    }
-
-                }
-            } else {
-                if (ch == customQuote) {
-
-                    inQuotes = true;
-
-                    //Fixed : allow "" in empty quote enclosed
-                    if (chars[0] != '"' && customQuote == '\"') {
-                        curVal.append('"');
-                    }
-
-                    //double quotes in column will hit this!
-                    if (startCollectChar) {
-                        curVal.append('"');
-                    }
-
-                } else if (ch == separators) {
-
-                    result.add(curVal.toString());
-
-                    curVal = new StringBuffer();
-                    startCollectChar = false;
-
-                } else if (ch == '\r') {
-                    //ignore LF characters
-                    continue;
-                } else if (ch == '\n') {
-                    //the end, break!
-                    break;
-                } else {
-                    curVal.append(ch);
-                }
-            }
-
-        }
-
-        result.add(curVal.toString());
-
-        return result;
-    }
-
-    public static void writeLine(Writer w, List<String> values) throws IOException {
-        writeLine(w, values, DEFAULT_SEPARATOR, ' ');
-    }
-
-    public static void writeLine(Writer w, List<String> values, char separators) throws IOException {
-        writeLine(w, values, separators, ' ');
-    }
-
-    //https://tools.ietf.org/html/rfc4180
-    private static String followCVSformat(String value) {
-
-        String result = value;
-        if (result.contains("\"")) {
-            result = result.replace("\"", "\"\"");
-        }
-        return result;
-
-    }
-
-    public static void writeLine(Writer w, List<String> values, char separators, char customQuote) throws IOException {
-
-        boolean first = true;
-
-        //default customQuote is empty
-
-        if (separators == ' ') {
-            separators = DEFAULT_SEPARATOR;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for (String value : values) {
-            if (!first) {
-                sb.append(separators);
-            }
-            if (customQuote == ' ') {
-                sb.append(followCVSformat(value));
-            } else {
-                sb.append(customQuote).append(followCVSformat(value)).append(customQuote);
-            }
-
-            first = false;
-        }
-        sb.append("\n");
-        w.append(sb.toString());
-    }
+    
 
 
 }
