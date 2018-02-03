@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+
+
 public class MainController {
     private static final char DEFAULT_SEPARATOR = ',';
     private static final char DEFAULT_QUOTE = '"';
@@ -33,6 +35,7 @@ public class MainController {
     Button upBtn = new Button("Up");
     @FXML
     Button downBtn = new Button ("Down");
+
 
     public void initialize(){
 
@@ -96,6 +99,7 @@ public class MainController {
         int index = tableView.getSelectionModel().getSelectedIndex();
         tableView.getItems().add(index-1, tableView.getItems().remove(index));
         tableView.getSelectionModel().clearAndSelect(index-1);
+        tableView.scrollTo(index-3);
     }
 
     public void downBtn(ActionEvent actionEvent) {
@@ -103,6 +107,8 @@ public class MainController {
         tableView.getItems().add(index+1, tableView.getItems().remove(index));
         tableView.getSelectionModel().clearAndSelect(index+1);
         System.out.println(tableView.getItems().size());
+        tableView.scrollTo(index-1);
+
     }
 
     
