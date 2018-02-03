@@ -65,6 +65,7 @@ public class MainController {
         tableView.setItems(taskObservableList);
         tableView.getColumns().add(title);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableView.getSelectionModel().select(0);
         ReadOnlyIntegerProperty selectedIndex = tableView.getSelectionModel().selectedIndexProperty();
         downBtn.disableProperty().bind(selectedIndex.isEqualTo((tableView.getItems().size()-1)));
         upBtn.disableProperty().bind(selectedIndex.lessThanOrEqualTo(0));
